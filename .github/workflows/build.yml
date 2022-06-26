@@ -1,0 +1,61 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: ${{ matrix.kind }} ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: seanmiddleditch/gha-setup-ninja@master
+
+      - name: Setup VS Dev Environment
+        if: startsWith(matrix.os, 'windows')
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          msbuild-architecture: x64
+
+      - name: Build Win32
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          mkdir build && cd build
+          cmake -DCMAKE_CXX_COMPILER=cl.exe -A Win32 ..
+          cmake --build . -- /property:Configuration=Release
+
+      - name: Upload Win32 Binaries
+        uses: actions/upload-artifact@v3
+        if: startsWith(matrix.os, 'windows') && github.event_name == 'push'
+        if-no-files-found: warn #ignore?
+        with:
+          path: build/Release/yogacore.dll
+          name: prebuilt_yoga_binaries_win32
+
+      - name: Build (Windows)
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          mkdir build && cd build
+          cmake -DCMAKE_CXX_COMPILER=cl.exe -A x64 ..
+          cmake --build . -- /property:Configuration=Release
+
+      - name: Build
+        if: startsWith(matrix.os, 'ubuntu') || startsWith(matrix.os, 'macOS')
+        run: |
+          mkdir build && cd build
+          cmake -G Ninja .. -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          cmake --build . --config Release
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
+        if-no-files-found: warn #ignore?
+        with:
+          path: |
+            build/libyogacore.dylib
+            build/libyogacore.so
+            build/Release/yogacore.dll
+          name: prebuilt_yoga_binaries
