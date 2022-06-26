@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -15,6 +15,7 @@
 #include <yoga/log.h>
 #include <iostream>
 #include <memory>
+#include "YogaJniException.h"
 
 using namespace facebook::yoga::vanillajni;
 using facebook::yoga::detail::Log;
@@ -195,7 +196,7 @@ static void jni_YGConfigSetLoggerJNI(
       delete context;
       YGConfigSetContext(config, nullptr);
     }
-    config->setLogger(nullptr);
+    YGConfigSetLogger(config, nullptr);
   }
 }
 
@@ -221,6 +222,16 @@ static void jni_YGNodeInsertChildJNI(
     jlong childPointer,
     jint index) {
   YGNodeInsertChild(
+      _jlong2YGNodeRef(nativePointer), _jlong2YGNodeRef(childPointer), index);
+}
+
+static void jni_YGNodeSwapChildJNI(
+    JNIEnv* env,
+    jobject obj,
+    jlong nativePointer,
+    jlong childPointer,
+    jint index) {
+  YGNodeSwapChild(
       _jlong2YGNodeRef(nativePointer), _jlong2YGNodeRef(childPointer), index);
 }
 
@@ -356,11 +367,7 @@ static void jni_YGNodeCalculateLayoutJNI(
     void* layoutContext = nullptr;
     auto map = PtrJNodeMapVanilla{};
     if (nativePointers) {
-      size_t nativePointersSize = env->GetArrayLength(nativePointers);
-      jlong result[nativePointersSize];
-      env->GetLongArrayRegion(nativePointers, 0, nativePointersSize, result);
-
-      map = PtrJNodeMapVanilla{result, nativePointersSize, javaNodes};
+      map = PtrJNodeMapVanilla{nativePointers, javaNodes};
       layoutContext = &map;
     }
 
@@ -372,8 +379,18 @@ static void jni_YGNodeCalculateLayoutJNI(
         YGNodeStyleGetDirection(_jlong2YGNodeRef(nativePointer)),
         layoutContext);
     YGTransferLayoutOutputsRecursive(env, obj, root, layoutContext);
-  } catch (jthrowable throwable) {
-    env->Throw(throwable);
+  } catch (const YogaJniException& jniException) {
+    ScopedLocalRef<jthrowable> throwable = jniException.getThrowable();
+    if (throwable.get()) {
+      env->Throw(throwable.get());
+    }
+  } catch (const std::logic_error& ex) {
+    env->ExceptionClear();
+    jclass cl = env->FindClass("Ljava/lang/IllegalStateException;");
+    static const jmethodID methodId = facebook::yoga::vanillajni::getMethodId(
+        env, cl, "<init>", "(Ljava/lang/String;)V");
+    auto throwable = env->NewObject(cl, methodId, env->NewStringUTF(ex.what()));
+    env->Throw(static_cast<jthrowable>(throwable));
   }
 }
 
@@ -705,8 +722,7 @@ static void jni_YGNodePrintJNI(JNIEnv* env, jobject obj, jlong nativePointer) {
   const YGNodeRef node = _jlong2YGNodeRef(nativePointer);
   YGNodePrint(
       node,
-      (YGPrintOptions)(
-          YGPrintOptionsStyle | YGPrintOptionsLayout | YGPrintOptionsChildren));
+      (YGPrintOptions) (YGPrintOptionsStyle | YGPrintOptionsLayout | YGPrintOptionsChildren));
 #endif
 }
 
@@ -750,6 +766,7 @@ static JNINativeMethod methods[] = {
     {"jni_YGNodeFreeJNI", "(J)V", (void*) jni_YGNodeFreeJNI},
     {"jni_YGNodeResetJNI", "(J)V", (void*) jni_YGNodeResetJNI},
     {"jni_YGNodeInsertChildJNI", "(JJI)V", (void*) jni_YGNodeInsertChildJNI},
+    {"jni_YGNodeSwapChildJNI", "(JJI)V", (void*) jni_YGNodeSwapChildJNI},
     {"jni_YGNodeSetIsReferenceBaselineJNI",
      "(JZ)V",
      (void*) jni_YGNodeSetIsReferenceBaselineJNI},

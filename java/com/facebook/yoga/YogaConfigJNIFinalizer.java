@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Facebook, Inc. and its affiliates.
+ * Copyright (c) Meta Platforms, Inc. and affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
@@ -10,10 +10,6 @@ package com.facebook.yoga;
 public class YogaConfigJNIFinalizer extends YogaConfigJNIBase {
   public YogaConfigJNIFinalizer() {
     super();
-  }
-
-  public YogaConfigJNIFinalizer(boolean useVanillaJNI) {
-    super(useVanillaJNI);
   }
 
   @Override
@@ -29,10 +25,7 @@ public class YogaConfigJNIFinalizer extends YogaConfigJNIBase {
     if (mNativePointer != 0) {
       long nativePointer = mNativePointer;
       mNativePointer = 0;
-      if (useVanillaJNI)
-        YogaNative.jni_YGConfigFreeJNI(nativePointer);
-      else
-        YogaNative.jni_YGConfigFree(nativePointer);
+      YogaNative.jni_YGConfigFreeJNI(nativePointer);
     }
   }
 }
