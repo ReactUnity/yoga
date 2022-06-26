@@ -30,7 +30,6 @@ jobs:
       - name: Upload Win32 Binaries
         uses: actions/upload-artifact@v3
         if: startsWith(matrix.os, 'windows') && github.event_name == 'push'
-        if-no-files-found: warn #ignore?
         with:
           path: build/Release/yogacore.dll
           name: prebuilt_yoga_binaries_win32
@@ -52,7 +51,6 @@ jobs:
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
         if: github.event_name == 'push'
-        if-no-files-found: warn #ignore?
         with:
           path: |
             build/libyogacore.dylib
