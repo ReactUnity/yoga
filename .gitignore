@@ -65,3 +65,7 @@ Carthage/Build
 .gradle
 # NDK/CMake
 .externalNativeBuild
+
+# Android build
+java/.cxx/cmake
+**/.cxx/ndk_locator_record_*

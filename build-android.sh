@@ -1,0 +1,1 @@
+./gradlew :yoga:assembleRelease
