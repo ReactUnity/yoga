@@ -63,7 +63,9 @@ Carthage/Build
 
 # Gradle
 .gradle
+
 # NDK/CMake
+.cxx
 .externalNativeBuild
 
 # Android build

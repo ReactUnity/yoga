@@ -1,4 +1,4 @@
-# Copyright (c) Facebook, Inc. and its affiliates.
+# Copyright (c) Meta Platforms, Inc. and affiliates.
 #
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
@@ -44,4 +44,7 @@ else()
     target_compile_options(yogacore PRIVATE /D_WINDLL)
     set_target_properties(yogacore PROPERTIES CXX_STANDARD 11)
     # target_compile_options(yogacore-win PRIVATE /D_WINDOWS /GR /EHsc /MDd /Zi /O2 /W4 /O2 /Be /Bd /EP)
+
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif ()
