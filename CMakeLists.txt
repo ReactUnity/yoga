@@ -44,4 +44,7 @@ else()
     target_compile_options(yogacore PRIVATE /D_WINDLL)
     set_target_properties(yogacore PROPERTIES CXX_STANDARD 11)
     # target_compile_options(yogacore-win PRIVATE /D_WINDOWS /GR /EHsc /MDd /Zi /O2 /W4 /O2 /Be /Bd /EP)
+
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif ()
