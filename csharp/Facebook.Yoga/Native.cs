@@ -338,12 +338,6 @@ namespace Facebook.Yoga
 
         [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
         public static extern float YGNodeStyleGetBorder(YGNodeHandle node, YogaEdge edge);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern void YGNodeStyleSetGap(YGNodeHandle node, YogaGap gap, float position);
-
-        [DllImport(DllName, ExactSpelling = true, CallingConvention = CallingConvention.Cdecl)]
-        public static extern float YGNodeStyleGetGap(YGNodeHandle node, YogaGap gap);
 #endregion
 
 #region YG_NODE_LAYOUT_PROPERTY
