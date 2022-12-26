@@ -92,8 +92,9 @@ CPPEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'YGEdgeStart'},
   YGEdgeTop:{value:'YGEdgeTop'},
 
-  YGGapColumn:{value:'YGGapColumn'},
-  YGGapRow:{value:'YGGapRow'},
+  YGGutterAll:{value:'YGGutterAll'},
+  YGGutterColumn:{value:'YGGutterColumn'},
+  YGGutterRow:{value:'YGGutterRow'},
 
   YGFlexDirectionColumn:{value:'YGFlexDirectionColumn'},
   YGFlexDirectionColumnReverse:{value:'YGFlexDirectionColumnReverse'},

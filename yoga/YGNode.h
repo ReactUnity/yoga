@@ -205,11 +205,11 @@ public:
       CompactValue defaultValue);
 
   static CompactValue computeRowGap(
-      const YGStyle::Gaps& gaps,
+      const YGStyle::Gutters& gutters,
       CompactValue defaultValue);
 
   static CompactValue computeColumnGap(
-      const YGStyle::Gaps& gaps,
+      const YGStyle::Gutters& gutters,
       CompactValue defaultValue);
 
   // Methods related to positions, margin, padding and border

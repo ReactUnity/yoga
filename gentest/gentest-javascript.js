@@ -107,8 +107,9 @@ JavascriptEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'Yoga.EDGE_START'},
   YGEdgeTop:{value:'Yoga.EDGE_TOP'},
 
-  YGGapColumn:{value:'Yoga.GAP_COLUMN'},
-  YGGapRow:{value:'Yoga.GAP_ROW'},
+  YGGutterAll:{value:'Yoga.GUTTER_ALL'},
+  YGGutterColumn:{value:'Yoga.GUTTER_COLUMN'},
+  YGGutterRow:{value:'Yoga.GUTTER_ROW'},
 
   YGFlexDirectionColumn:{value:'Yoga.FLEX_DIRECTION_COLUMN'},
   YGFlexDirectionColumnReverse:{value:'Yoga.FLEX_DIRECTION_COLUMN_REVERSE'},

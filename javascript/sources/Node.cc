@@ -144,6 +144,10 @@ void Node::setFlexBasisPercent(double flexBasis) {
   YGNodeStyleSetFlexBasisPercent(m_node, flexBasis);
 }
 
+void Node::setFlexBasisAuto() {
+  YGNodeStyleSetFlexBasisAuto(m_node);
+}
+
 void Node::setFlexGrow(double flexGrow) {
   YGNodeStyleSetFlexGrow(m_node, flexGrow);
 }
@@ -226,6 +230,10 @@ void Node::setPaddingPercent(int edge, double padding) {
 
 void Node::setIsReferenceBaseline(bool isReferenceBaseline) {
   YGNodeSetIsReferenceBaseline(m_node, isReferenceBaseline);
+}
+
+void Node::setGap(int gutter, double gapLength) {
+  YGNodeStyleSetGap(m_node, static_cast<YGGutter>(gutter), gapLength);
 }
 
 int Node::getPositionType(void) const {
@@ -321,6 +329,11 @@ double Node::getBorder(int edge) const {
 Value Node::getPadding(int edge) const {
   return Value::fromYGValue(
       YGNodeStyleGetPadding(m_node, static_cast<YGEdge>(edge)));
+}
+
+Value Node::getGap(int gutter, ) {
+  return Value::fromYGValue(
+      YGNodeStyleGetGap(m_node, static_cast<YGGutter>(gutter)));
 }
 
 bool Node::isReferenceBaseline() {

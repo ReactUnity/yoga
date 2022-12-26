@@ -70,6 +70,7 @@ NBIND_CLASS(Node) {
   method(setFlex);
   method(setFlexBasis);
   method(setFlexBasisPercent);
+  method(setFlexBasisAuto);
   method(setFlexGrow);
   method(setFlexShrink);
 
@@ -96,6 +97,8 @@ NBIND_CLASS(Node) {
 
   method(setPadding);
   method(setPaddingPercent);
+
+  method(setGap);
 
   method(getPositionType);
   method(getPosition);
@@ -130,6 +133,8 @@ NBIND_CLASS(Node) {
   method(getDisplay);
 
   method(getPadding);
+
+  method(getGap);
 
   method(insertChild);
   method(removeChild);

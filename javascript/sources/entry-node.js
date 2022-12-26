@@ -12,19 +12,10 @@ const Yoga = require('./entry-common');
 const nbind = require('nbind');
 const {bind, lib} = nbind.init(__dirname + '/../');
 module.exports = Yoga(bind, lib);
+export type { Yoga$Config, Yoga$Node } from './entry-common';
 export type {
-  Yoga$Justify,
-  Yoga$Align,
-  Yoga$FlexDirection,
-  Yoga$Direction,
-  Yoga$Wrap,
-  Yoga$Gap,
-  Yoga$Edge,
-  Yoga$Display,
-  Yoga$Unit,
-  Yoga$Overflow,
-  Yoga$PositionType,
-  Yoga$ExperimentalFeature,
+  Yoga$Align, Yoga$Direction, Yoga$Display, Yoga$Edge, Yoga$ExperimentalFeature, Yoga$FlexDirection, Yoga$Gutter, Yoga$Justify, Yoga$Overflow,
+  Yoga$PositionType, Yoga$Unit, Yoga$Wrap
 } from './YGEnums.js';
 
-export type {Yoga$Node, Yoga$Config} from './entry-common';
+

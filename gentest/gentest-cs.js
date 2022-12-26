@@ -105,8 +105,9 @@ CSEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'Start'},
   YGEdgeTop:{value:'Top'},
 
-  YGGapColumn:{value:'Column'},
-  YGGapRow:{value:'Row'},
+  YGGutterAll:{value:''},
+  YGGutterColumn:{value:'Column'},
+  YGGutterRow:{value:'Row'},
 
   YGFlexDirectionColumn:{value:'YogaFlexDirection.Column'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.ColumnReverse'},

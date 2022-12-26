@@ -84,24 +84,24 @@ CompactValue YGNode::computeEdgeValueForColumn(
 }
 
 CompactValue YGNode::computeRowGap(
-    const YGStyle::Gaps& gaps,
+    const YGStyle::Gutters& gutters,
     CompactValue defaultValue) {
-  if (!gaps[YGGapRow].isUndefined()) {
-    return gaps[YGGapRow];
-  } else if (!gaps[YGGapAll].isUndefined()) {
-    return gaps[YGGapAll];
+  if (!gutters[YGGutterRow].isUndefined()) {
+    return gutters[YGGutterRow];
+  } else if (!gutters[YGGutterAll].isUndefined()) {
+    return gutters[YGGutterAll];
   } else {
     return defaultValue;
   }
 }
 
 CompactValue YGNode::computeColumnGap(
-    const YGStyle::Gaps& gaps,
+    const YGStyle::Gutters& gutters,
     CompactValue defaultValue) {
-  if (!gaps[YGGapColumn].isUndefined()) {
-    return gaps[YGGapColumn];
-  } else if (!gaps[YGGapAll].isUndefined()) {
-    return gaps[YGGapAll];
+  if (!gutters[YGGutterColumn].isUndefined()) {
+    return gutters[YGGutterColumn];
+  } else if (!gutters[YGGutterAll].isUndefined()) {
+    return gutters[YGGutterAll];
   } else {
     return defaultValue;
   }

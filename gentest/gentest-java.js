@@ -128,8 +128,9 @@ JavaEmitter.prototype = Object.create(Emitter.prototype, {
   YGEdgeStart:{value:'YogaEdge.START'},
   YGEdgeTop:{value:'YogaEdge.TOP'},
 
-  YGGapColumn:{value:'YogaGap.COLUMN'},
-  YGGapRow:{value:'YogaGap.ROW'},
+  YGGutterAll:{value:'YogaGutter.ALL'},
+  YGGutterColumn:{value:'YogaGutter.COLUMN'},
+  YGGutterRow:{value:'YogaGutter.ROW'},
 
   YGFlexDirectionColumn:{value:'YogaFlexDirection.COLUMN'},
   YGFlexDirectionColumnReverse:{value:'YogaFlexDirection.COLUMN_REVERSE'},

@@ -11,17 +11,7 @@
 
 const CONSTANTS = require('./YGEnums');
 import type {
-  Yoga$Edge,
-  Yoga$Wrap,
-  Yoga$Align,
-  Yoga$FlexDirection,
-  Yoga$Gap,
-  Yoga$Direction,
-  Yoga$PositionType,
-  Yoga$Overflow,
-  Yoga$Justify,
-  Yoga$Display,
-  Yoga$ExperimentalFeature,
+  Yoga$Align, Yoga$Direction, Yoga$Display, Yoga$Edge, Yoga$ExperimentalFeature, Yoga$FlexDirection, Yoga$Justify, Yoga$Overflow, Yoga$PositionType, Yoga$Wrap
 } from './YGEnums';
 
 class Layout {
@@ -156,7 +146,7 @@ export type Yoga$Node = {
   getFlexWrap(): Yoga$Wrap,
   getHeight(): Value,
   getJustifyContent(): Yoga$Justify,
-  getGap(gapDirection: Yoga$Gap): Value,
+  getGap(gutter: Yoga$Gutter): Value,
   getMargin(edge: Yoga$Edge): Value,
   getMaxHeight(): Value,
   getMaxWidth(): Value,
@@ -182,6 +172,7 @@ export type Yoga$Node = {
   setFlex(flex: number): void,
   setFlexBasis(flexBasis: number | string): void,
   setFlexBasisPercent(flexBasis: number): void,
+  setFlexBasisAuto(): void,
   setFlexDirection(flexDirection: Yoga$FlexDirection): void,
   setFlexGrow(flexGrow: number): void,
   setFlexShrink(flexShrink: number): void,
@@ -190,7 +181,7 @@ export type Yoga$Node = {
   setHeightAuto(): void,
   setHeightPercent(height: number): void,
   setJustifyContent(justifyContent: Yoga$Justify): void,
-  setGap(gapDirection: Yoga$Gap, gap: number): void,
+  setGap(gutter: Yoga$Gutter, gapLength: number): Value,
   setMargin(edge: Yoga$Edge, margin: number): void,
   setMarginAuto(edge: Yoga$Edge): void,
   setMarginPercent(edge: Yoga$Edge, margin: number): void,
