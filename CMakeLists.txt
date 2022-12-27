@@ -15,41 +15,6 @@ file(GLOB_RECURSE yogacore_SRC yoga/*.cpp)
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
 
-# declare target to install
-install(TARGETS yogacore EXPORT yoga-targets
-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-)
-
-# install header files
-install(DIRECTORY
-    "${CMAKE_CURRENT_LIST_DIR}/yoga"
-    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
-    FILES_MATCHING PATTERN "*.h"
-)
-
-# install target config
-install(EXPORT yoga-targets
-    FILE yogaTargets.cmake
-    NAMESPACE yoga::
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
-)
-
-
-# generate config file
-configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/scripts/yoga-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/yogaConfig.cmake
-    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
-)
-
-# install config file
-install(FILES
-    ${CMAKE_CURRENT_BINARY_DIR}/yogaConfig.cmake
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
-)
-
 if (NOT WIN32)
     add_compile_options(
             -fno-omit-frame-pointer
@@ -95,3 +60,39 @@ else()
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
     set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
 endif ()
+
+
+# declare target to install
+install(TARGETS yogacore EXPORT yoga-targets
+    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+    INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
+
+# install header files
+install(DIRECTORY
+    "${CMAKE_CURRENT_LIST_DIR}/yoga"
+    DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+    FILES_MATCHING PATTERN "*.h"
+)
+
+# install target config
+install(EXPORT yoga-targets
+    FILE yogaTargets.cmake
+    NAMESPACE yoga::
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
+)
+
+
+# generate config file
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/scripts/yoga-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/yogaConfig.cmake
+    INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
+)
+
+# install config file
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/yogaConfig.cmake
+    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/yoga
+)
