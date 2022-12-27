@@ -11,12 +11,6 @@ set(CMAKE_VERBOSE_MAKEFILE on)
 
 file(GLOB_RECURSE yogacore_SRC yoga/*.cpp)
 
-target_include_directories(yogacore
-    PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
-    $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/yoga>)
-
-
 # cmake install config
 include(GNUInstallDirs)
 include(CMakePackageConfigHelpers)
@@ -68,7 +62,11 @@ if (NOT WIN32)
 
     add_library(yogacore SHARED ${yogacore_SRC})
 
-    target_include_directories(yogacore PUBLIC .)
+    target_include_directories(yogacore
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/yoga>)
+
     if( ANDROID )
         target_link_libraries(yogacore android log)
     endif ()
@@ -85,7 +83,11 @@ else()
     add_library(yogacore MODULE ${yogacore_SRC})
 
     # windows target
-    target_include_directories(yogacore PUBLIC .)
+    target_include_directories(yogacore
+        PUBLIC
+        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>
+        $<INSTALL_INTERFACE:${CMAKE_INSTALL_PREFIX}/include/yoga>)
+
     target_compile_options(yogacore PRIVATE /D_WINDLL)
     set_target_properties(yogacore PROPERTIES CXX_STANDARD 11)
     # target_compile_options(yogacore-win PRIVATE /D_WINDOWS /GR /EHsc /MDd /Zi /O2 /W4 /O2 /Be /Bd /EP)
