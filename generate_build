@@ -6,13 +6,19 @@
 
 rm -rf build
 
-if which ninja; then
+
+if [ "$#" -eq 0 ]; then
+  build_cmd=""
+else
+  build_cmd="$@"
+fi
+
+if [[ $build_cmd != *"-A Win32"* && -x $(command -v ninja) ]]; then
   set -e
-  cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja "$@" \
-    || cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON "$@"
+  cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja "$build_cmd"
 else
   set -e
-  cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON "$@"
+  cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON "$build_cmd"
 fi
 
 cmake --build build --config Release
