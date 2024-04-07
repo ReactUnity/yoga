@@ -3,6 +3,7 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+option(BUILD_SHARED_LIBS "Build shared libraries (DLLs) instead of static libraries" OFF)
 
 cmake_minimum_required(VERSION 3.13...3.26)
 project(yogacore)
@@ -22,7 +23,11 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/*.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/**/*.cpp)
 
-add_library(yogacore STATIC ${SOURCES})
+if(BUILD_SHARED_LIBS)
+  add_library(yogacore SHARED ${SOURCES})
+else()
+  add_library(yogacore STATIC ${SOURCES})
+endif()
 
 # Yoga conditionally uses <android/log> when building for Android
 if (ANDROID)

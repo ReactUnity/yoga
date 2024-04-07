@@ -1,0 +1,81 @@
+name: Build Binaries
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    defaults:
+      run:
+        shell: bash
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macOS-latest, ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: ${{ startsWith(matrix.os, 'windows') && 'MSVC' || 'Clang' }}
+
+      - name: Build
+        run: ./generate_build
+
+      - name: Move Windows files
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          mkdir -p dist/win-x64
+          cp build/Release/yogacore.dll dist/win-x64/yoga.dll
+
+      - name: Build (x86)
+        if: startsWith(matrix.os, 'windows')
+        run: ./generate_build -A Win32
+
+      - name: Move Windows files (x86)
+        if: startsWith(matrix.os, 'windows')
+        run: |
+          mkdir -p dist/win-x86
+          cp build/Release/yogacore.dll dist/win-x86/yoga.dll
+
+      - name: Move MacOS files
+        if:  startsWith(matrix.os, 'macOS')
+        run: |
+          mkdir -p dist/osx
+          cp build/Release/libyogacore.dylib dist/osx/libyoga.dylib
+
+      - name: Move Ubuntu files
+        if: startsWith(matrix.os, 'ubuntu')
+        run: |
+          mkdir -p dist/linux
+          cp build/Release/libyogacore.so dist/linux/libyoga.so
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
+        with:
+          path: dist/**
+          name: prebuilt_yoga_binaries
+
+  build-android:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-android
+
+      - name: Build
+        run: |
+          ./gradlew :yoga:assembleRelease
+          mkdir -p dist/android
+          cp java/build/outputs/aar/yoga-release.aar dist/android/yoga.aar
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
+        with:
+          path: dist/**
+          name: prebuilt_yoga_binaries
+

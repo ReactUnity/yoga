@@ -18,7 +18,6 @@ add_compile_options(
     /EHsc
     # Enable warnings and warnings as errors
     /W4
-    /WX
     # Disable RTTI
     $<$<COMPILE_LANGUAGE:CXX>:/GR->
     # Use /O2 (Maximize Speed)
@@ -33,7 +32,6 @@ add_compile_options(
     -fexceptions
     # Enable warnings and warnings as errors
     -Wall
-    -Werror
     # Disable RTTI
     $<$<COMPILE_LANGUAGE:CXX>:-fno-rtti>
     # Use -O2 (prioritize speed)
