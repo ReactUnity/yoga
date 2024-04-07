@@ -24,7 +24,11 @@ file(GLOB SOURCES CONFIGURE_DEPENDS
     ${CMAKE_CURRENT_SOURCE_DIR}/**/*.cpp)
 
 if(BUILD_SHARED_LIBS)
-  add_library(yogacore SHARED ${SOURCES})
+  if(WIN32)
+    add_library(yogacore MODULE ${SOURCES})
+  else()
+    add_library(yogacore SHARED ${SOURCES})
+  endif()
 else()
   add_library(yogacore STATIC ${SOURCES})
 endif()
