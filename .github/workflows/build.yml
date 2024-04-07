@@ -33,6 +33,7 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         run: |
           mkdir -p dist/win-x64
+          cp build/yogacore.dll dist/win-x64/yoga.dll
           cp -a build/ dist/win-x64/
 
       - name: Build (x86)
@@ -43,19 +44,19 @@ jobs:
         if: startsWith(matrix.os, 'windows')
         run: |
           mkdir -p dist/win-x86
-          cp -a build/ dist/win-x86/
+          cp build/Release/yogacore.dll dist/win-x86/yoga.dll
 
       - name: Move MacOS files
         if:  startsWith(matrix.os, 'macos')
         run: |
           mkdir -p dist/osx
-          cp -a build/ dist/osx/
+          cp build/libyogacore.dylib dist/osx/libyoga.dylib
 
       - name: Move Ubuntu files
         if: startsWith(matrix.os, 'ubuntu')
         run: |
           mkdir -p dist/linux
-          cp -a build/ dist/linux/
+          cp build/libyogacore.so dist/linux/libyoga.so
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
