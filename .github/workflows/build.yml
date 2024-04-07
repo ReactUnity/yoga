@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macOS-latest, ubuntu-latest, windows-latest]
+        os: [macos-13, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v3
@@ -23,7 +23,7 @@ jobs:
           toolchain: ${{ startsWith(matrix.os, 'windows') && 'MSVC' || 'Clang' }}
 
       - name: Setup Apple
-        if: startsWith(matrix.os, 'macOS')
+        if: startsWith(matrix.os, 'macos')
         uses: ./.github/actions/setup-apple
 
       - name: Build
@@ -46,7 +46,7 @@ jobs:
           cp -a build/ dist/win-x86/
 
       - name: Move MacOS files
-        if:  startsWith(matrix.os, 'macOS')
+        if:  startsWith(matrix.os, 'macos')
         run: |
           mkdir -p dist/osx
           cp -a build/ dist/osx/
