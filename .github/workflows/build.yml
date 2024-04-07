@@ -5,62 +5,81 @@ on:
   - pull_request
   - workflow_dispatch
 
-jobs:
-  build:
-    name: Build ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    defaults:
-      run:
-        shell: bash
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [macos-13, ubuntu-latest, windows-latest]
+defaults:
+  run:
+    shell: bash
 
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: Setup
         uses: ./.github/actions/setup-cpp
         with:
-          toolchain: ${{ startsWith(matrix.os, 'windows') && 'MSVC' || 'Clang' }}
+          toolchain: Clang
+
+      - name: Build
+        run: |
+          cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja
+          cmake --build build --config Release
+          mkdir -p dist/linux
+          cp build/libyogacore.so dist/linux/libyoga.so
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
+        with:
+          path: dist/**
+          name: prebuilt_yoga_binaries
+
+  build-macos:
+    runs-on: macos-13
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: CLang
 
       - name: Setup Apple
-        if: startsWith(matrix.os, 'macos')
         uses: ./.github/actions/setup-apple
 
-      - name: Build (Windows)
-        if: startsWith(matrix.os, 'windows')
+      - name: Build
+        run: |
+          cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON
+          cmake --build build --config Release
+          mkdir -p dist/osx
+          cp build/libyogacore.dylib dist/osx/libyoga.dylib
+
+      - name: Upload Binaries
+        uses: actions/upload-artifact@v3
+        if: github.event_name == 'push'
+        with:
+          path: dist/**
+          name: prebuilt_yoga_binaries
+
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup
+        uses: ./.github/actions/setup-cpp
+        with:
+          toolchain: MSVC
+
+      - name: Build
         run: |
           cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON
           cmake -B build32 -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -A Win32
           cmake --build build --config Release
           cmake --build build32 --config Release
-
-      - name: Move Windows files
-        if: startsWith(matrix.os, 'windows')
-        run: |
           mkdir -p dist/win-x64 dist/win-x86
           cp build/Release/yogacore.dll dist/win-x64/yoga.dll
           cp build32/Release/yogacore.dll dist/win-x86/yoga.dll
-
-      - name: Build (non-Windows)
-        if: startsWith(matrix.os, 'windows') != true
-        run: |
-          cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja
-          cmake --build build --config Release
-
-      - name: Move MacOS files
-        if: startsWith(matrix.os, 'macos')
-        run: |
-          mkdir -p dist/osx
-          cp build/libyogacore.dylib dist/osx/libyoga.dylib
-
-      - name: Move Ubuntu files
-        if: startsWith(matrix.os, 'ubuntu')
-        run: |
-          mkdir -p dist/linux
-          cp build/libyogacore.so dist/linux/libyoga.so
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
