@@ -8,7 +8,8 @@ rm -rf build
 
 if which ninja; then
   set -e
-  cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja "$@"
+  cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja "$@" \
+    || cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON "$@"
 else
   set -e
   cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON "$@"
