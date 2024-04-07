@@ -22,6 +22,10 @@ jobs:
         with:
           toolchain: ${{ startsWith(matrix.os, 'windows') && 'MSVC' || 'Clang' }}
 
+      - name: Setup Apple
+        if: startsWith(matrix.os, 'macOS')
+        uses: ./.github/actions/setup-apple
+
       - name: Build
         run: ./generate_build
 
