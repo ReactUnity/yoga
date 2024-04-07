@@ -34,7 +34,6 @@ jobs:
         run: |
           mkdir -p dist/win-x64
           cp build/yogacore.dll dist/win-x64/yoga.dll
-          cp -a build/ dist/win-x64/
 
       - name: Build (x86)
         if: startsWith(matrix.os, 'windows')
