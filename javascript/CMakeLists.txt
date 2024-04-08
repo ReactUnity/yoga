@@ -24,8 +24,7 @@ set(COMPILE_OPTIONS
     -fno-exceptions
     -fno-rtti
     -g0
-    -Os
-    "SHELL:-s STRICT=1")
+    -Os)
 
 add_compile_options(${COMPILE_OPTIONS})
 
