@@ -73,7 +73,7 @@ jobs:
           cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_Swift_COMPILER_FORCED=true -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
           cmake --build build --config Release
           mkdir -p dist/iOS
-          cp -a build/ dist/iOS/
+          cp build/Release-iphoneos/libyogacore.a dist/iOS/libyoga.a
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
