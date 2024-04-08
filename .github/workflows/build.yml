@@ -34,12 +34,11 @@ jobs:
           cp build/libyogacore.so dist/linux/libyoga.so
 
           rm -rf build
-          ./javascript/.emsdk/emsdk install latest
-          ./javascript/.emsdk/emsdk activate latest
-          emcmake cmake -B build -S javascript -D CMAKE_BUILD_TYPE=Release -G Ninja
-          cmake --build build --config Release
+          cd javascript
+          yarn build
+          cd ..
           mkdir -p dist/webgl
-          cp -a build/ dist/webgl/
+          cp -a javascript/build/ dist/webgl/
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
