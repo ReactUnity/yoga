@@ -51,7 +51,7 @@ add_link_options(
 
 link_libraries(embind)
 
-add_library(yogaObjLib OBJECT ${SOURCES})
+add_library(yogaObjLib STATIC ${SOURCES})
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
 

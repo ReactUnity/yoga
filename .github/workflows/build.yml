@@ -38,6 +38,7 @@ jobs:
         run: |
           yarn build
           mkdir -p ../dist/webgl
+          cp -a build/ ../dist/webgl/
           cp -a binaries/ ../dist/webgl/
 
       - name: Upload Binaries
