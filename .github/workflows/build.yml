@@ -34,6 +34,8 @@ jobs:
           cp build/libyogacore.so dist/linux/libyoga.so
 
           rm -rf build
+          ./javascript/.emsdk/emsdk install latest
+          ./javascript/.emsdk/emsdk activate latest
           emcmake cmake -B build -S javascript -D CMAKE_BUILD_TYPE=Release -G Ninja
           cmake --build build --config Release
           mkdir -p dist/webgl
