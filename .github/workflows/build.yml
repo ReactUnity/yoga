@@ -33,12 +33,12 @@ jobs:
           mkdir -p dist/linux
           cp build/libyogacore.so dist/linux/libyoga.so
 
-          rm -rf build
-          cd javascript
+      - name: Build JS
+        working-directory: javascript
+        run: |
           yarn build
-          cd ..
-          mkdir -p dist/webgl
-          cp -a javascript/build/ dist/webgl/
+          mkdir -p ../dist/webgl
+          cp -a binaries/ ../dist/webgl/
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
