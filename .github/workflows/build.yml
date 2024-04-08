@@ -62,7 +62,7 @@ jobs:
 
       - name: Build
         run: |
-          cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON
+          cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
           cmake --build build --config Release
           mkdir -p dist/osx
           cp build/libyogacore.dylib dist/osx/libyoga.dylib
