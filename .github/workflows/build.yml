@@ -38,8 +38,7 @@ jobs:
         run: |
           yarn build
           mkdir -p ../dist/webgl
-          cp -a build/ ../dist/webgl/
-          cp -a binaries/ ../dist/webgl/
+          cp build/libyogaObjLib.a ../dist/webgl/libyoga.a
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
@@ -67,6 +66,14 @@ jobs:
           cmake --build build --config Release
           mkdir -p dist/osx
           cp build/libyogacore.dylib dist/osx/libyoga.dylib
+
+      - name: Build IOS
+        run: |
+          rm -rf build
+          cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -G Xcode -DCMAKE_SYSTEM_NAME=iOS -DCMAKE_Swift_COMPILER_FORCED=true -DCMAKE_OSX_DEPLOYMENT_TARGET=11.0
+          cmake --build build --config Release
+          mkdir -p dist/iOS
+          cp -a build/ dist/iOS/
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
