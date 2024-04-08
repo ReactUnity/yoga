@@ -23,6 +23,9 @@ jobs:
       - name: Setup JS
         uses: ./.github/actions/setup-js
 
+      - name: Restore emsdk
+        uses: ./.github/actions/cache-emsdk
+
       - name: Build
         run: |
           cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja
