@@ -34,7 +34,7 @@ jobs:
           cp build/libyogacore.so dist/linux/libyoga.so
 
           rm -rf build
-          cmake -B build -S javascript -D CMAKE_BUILD_TYPE=Release -G Ninja
+          emcmake cmake -B build -S javascript -D CMAKE_BUILD_TYPE=Release -G Ninja
           cmake --build build --config Release
           mkdir -p dist/webgl
           cp -a build/ dist/webgl/
