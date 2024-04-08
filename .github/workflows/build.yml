@@ -20,12 +20,21 @@ jobs:
         with:
           toolchain: Clang
 
+      - name: Setup JS
+        uses: ./.github/actions/setup-js
+
       - name: Build
         run: |
           cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -G Ninja
           cmake --build build --config Release
           mkdir -p dist/linux
           cp build/libyogacore.so dist/linux/libyoga.so
+
+          rm -rf build
+          cmake -B build -S javascript -D CMAKE_BUILD_TYPE=Release -G Ninja
+          cmake --build build --config Release
+          mkdir -p dist/webgl
+          cp -a build/ dist/webgl/
 
       - name: Upload Binaries
         uses: actions/upload-artifact@v3
