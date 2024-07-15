@@ -6,6 +6,7 @@
 cmake_minimum_required(VERSION 3.13...3.26)
 project(yogajni)
 set(CMAKE_VERBOSE_MAKEFILE on)
+set(BUILD_SHARED_LIBS on)
 
 set(YOGA_ROOT ${CMAKE_CURRENT_SOURCE_DIR}/..)
 include(${YOGA_ROOT}/cmake/project-defaults.cmake)
