@@ -55,11 +55,6 @@ jobs:
       - name: Setup Apple
         uses: ./.github/actions/setup-apple
 
-      # - name: Setup
-      #   uses: ./.github/actions/setup-cpp
-      #   with:
-      #     toolchain: CLang
-
       - name: Build
         run: |
           cmake -B build -S yoga -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -DCMAKE_OSX_ARCHITECTURES="x86_64;arm64"
@@ -90,7 +85,7 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup-cpp
         with:
-          toolchain: Clang
+          toolchain: MSVC
 
       - name: Build
         run: |
