@@ -41,7 +41,7 @@ jobs:
           cp build/libyogaObjLib.a ../dist/webgl/libyoga.a
 
       - name: Upload Binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'push'
         with:
           path: dist/**
@@ -76,7 +76,7 @@ jobs:
           cp build/Release-iphoneos/libyogacore.a dist/iOS/libyoga.a
 
       - name: Upload Binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'push'
         with:
           path: dist/**
@@ -103,7 +103,7 @@ jobs:
           cp build32/Release/yogacore.dll dist/win-x86/yoga.dll
 
       - name: Upload Binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'push'
         with:
           path: dist/**
@@ -122,9 +122,8 @@ jobs:
           cp java/build/outputs/aar/yoga-release.aar dist/android/yoga.aar
 
       - name: Upload Binaries
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: github.event_name == 'push'
         with:
           path: dist/**
           name: prebuilt_yoga_binaries
-
