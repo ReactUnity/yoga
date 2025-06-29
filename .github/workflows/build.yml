@@ -48,7 +48,7 @@ jobs:
           name: prebuilt_yoga_binaries_linux
 
   build-macos:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - uses: actions/checkout@v3
 
