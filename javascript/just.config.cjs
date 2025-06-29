@@ -213,6 +213,7 @@ function emcmakeGenerateTask() {
       '-B',
       'build',
       ...(process.platform === 'win32' ? [] : ['-G', 'Ninja']),
+      '-D BUILD_STATIC_LIBS=ON',
     ];
     logger.info(['emcmake', ...args].join(' '));
 

@@ -25,6 +25,7 @@ node_modules
 # Xcode
 ## Build generated
 build/
+build32/
 DerivedData/
 
 ## Various settings

@@ -3,6 +3,8 @@
 # This source code is licensed under the MIT license found in the
 # LICENSE file in the root directory of this source tree.
 
+option(BUILD_STATIC_LIBS "Build static library (.a) instead of object library" OFF)
+
 cmake_minimum_required(VERSION 3.13...3.26)
 set(CMAKE_VERBOSE_MAKEFILE on)
 project(yoga)
@@ -24,8 +26,7 @@ set(COMPILE_OPTIONS
     -fno-exceptions
     -fno-rtti
     -g0
-    -Os
-    "SHELL:-s STRICT=1")
+    -Os)
 
 add_compile_options(${COMPILE_OPTIONS})
 
@@ -52,7 +53,11 @@ add_link_options(
 
 link_libraries(embind)
 
-add_library(yogaObjLib OBJECT ${SOURCES})
+if(BUILD_STATIC_LIBS)
+  add_library(yogaObjLib STATIC ${SOURCES})
+else()
+  add_library(yogaObjLib OBJECT ${SOURCES})
+endif()
 
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/binaries)
 
