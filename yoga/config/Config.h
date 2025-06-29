@@ -22,7 +22,8 @@ namespace facebook::yoga {
 class Config;
 class Node;
 
-using ExperimentalFeatureSet = std::bitset<ordinalCount<ExperimentalFeature>()>;
+constexpr size_t ExperimentalFeatureCount = 1;
+using ExperimentalFeatureSet = std::bitset<ExperimentalFeatureCount>;
 
 // Whether moving a node from an old to new config should dirty previously
 // calculated layout results.
