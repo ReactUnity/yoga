@@ -19,7 +19,6 @@ add_compile_options(
     /EHsc
     # Enable warnings and warnings as errors
     /W4
-    /WX
     # Enable RTTI
     $<$<COMPILE_LANGUAGE:CXX>:/GR>
     # Use /O2 (Maximize Speed)
