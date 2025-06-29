@@ -73,10 +73,11 @@ class YG_EXPORT Config : public ::YGConfig {
   YGCloneNodeFunc cloneNodeCallback_{nullptr};
   YGLogger logger_{};
 
-  bool useWebDefaults_ : 1 = false;
+  bool useWebDefaults_ = false;
 
   uint32_t version_ = 0;
-  ExperimentalFeatureSet experimentalFeatures_{};
+  ExperimentalFeatureSet experimentalFeatures_ = ExperimentalFeatureSet{};
+
   Errata errata_ = Errata::None;
   float pointScaleFactor_ = 1.0f;
   void* context_ = nullptr;
