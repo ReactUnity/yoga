@@ -45,7 +45,7 @@ jobs:
         if: github.event_name == 'push'
         with:
           path: dist/**
-          name: prebuilt_yoga_binaries
+          name: prebuilt_yoga_binaries_linux
 
   build-macos:
     runs-on: macos-latest
@@ -80,7 +80,7 @@ jobs:
         if: github.event_name == 'push'
         with:
           path: dist/**
-          name: prebuilt_yoga_binaries
+          name: prebuilt_yoga_binaries_macos
 
   build-windows:
     runs-on: windows-latest
@@ -107,7 +107,7 @@ jobs:
         if: github.event_name == 'push'
         with:
           path: dist/**
-          name: prebuilt_yoga_binaries
+          name: prebuilt_yoga_binaries_windows
 
   build-android:
     runs-on: ubuntu-latest
@@ -126,4 +126,4 @@ jobs:
         if: github.event_name == 'push'
         with:
           path: dist/**
-          name: prebuilt_yoga_binaries
+          name: prebuilt_yoga_binaries_android
